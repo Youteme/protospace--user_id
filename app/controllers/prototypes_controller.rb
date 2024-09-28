@@ -11,14 +11,11 @@ class PrototypesController < ApplicationController
   end
 
   def create
-    @prototype = Prototype.find(params[:prototype_id])
-    @comment = @prototype.comments.build(comment_params)
-    @comment.user = current_user
-    
-    if@comment.save
-      redirect_to @prototype, notice: "Comment was successfully created."
+    @prototype = Prototype.new(prototype_params)
+    if @prototype.save
+      redirect_to root_path
     else
-      redirect_to @prototype, alert: "Comment could not be created."
+      render :new
     end
   end
 
